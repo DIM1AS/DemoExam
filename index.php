@@ -49,7 +49,7 @@ $result = $conn->query($query);
                 <?php else: ?>
                     <a href="profile.php"><i class="fas fa-user"></i></a>
                 <?php endif; ?>
-                <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+                <a href="./assets/pages/cart.php"><i class="fas fa-shopping-cart"></i></a>
                 <a href="./assets/pages/logout.php"><i class="fas fa-sign-out-alt"></i></a>
 
             <?php else: ?>
@@ -87,7 +87,7 @@ $result = $conn->query($query);
             <div class="products-container">
                 <?php while ($product = $result->fetch_assoc()): ?>
                     <div class="product">
-                        <img src="path/to/images/<?php echo htmlspecialchars($product['image']); ?>"
+                        <img src="<?php echo htmlspecialchars($product['image']); ?>"
                             alt="<?php echo htmlspecialchars($product['name']); ?>">
                         <h3>
                             <?php echo htmlspecialchars($product['name']); ?>
@@ -98,6 +98,11 @@ $result = $conn->query($query);
                         <p>Цена:
                             <?php echo htmlspecialchars($product['price']); ?> руб.
                         </p>
+                        <form action="../../assets/pages/add_to_cart.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <input type="number" name="quantity" value="1" min="1">
+                            <button type="submit">Добавить в корзину</button>
+                        </form>
                     </div>
                 <?php endwhile; ?>
             </div>

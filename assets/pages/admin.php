@@ -24,9 +24,12 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     </h1>
     <a href="../../index.php" class="back-to-main">&larr; Назад на главную</a>
 
+
     <div class="admin-nav">
         <a href="manage_users.php">Управление пользователями</a>
+        <a href="manage_products.php">Управление товарами</a>
     </div>
+
 </body>
 
 </html>

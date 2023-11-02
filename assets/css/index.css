@@ -356,3 +356,58 @@ nav.menu a i {
     border: none;
     border-radius: 4px;
 }
+
+/* Стили для кнопок */
+button, .btn {
+    background-color: #4CAF50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Внутренние отступы */
+    border: none; /* Убрать границу */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+}
+
+button:hover, .btn:hover {
+    background-color: #45a049; /* Темно-зеленый фон при наведении */
+}
+
+/* Стили для элемента выбора количества */
+input[type="number"] {
+    width: 50px; /* Ширина поля */
+    padding: 5px; /* Внутренние отступы */
+    margin: 5px 0; /* Внешние отступы сверху и снизу */
+    border: 1px solid #ddd; /* Граница */
+    border-radius: 4px; /* Скругленные углы */
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+/* Улучшение внешнего вида для таблицы корзины */
+table {
+    width: 100%; /* Ширина таблицы */
+    border-collapse: collapse; /* Убрать двойные границы */
+}
+
+table, th, td {
+    border: 1px solid #ddd; /* Граница для таблицы и ячеек */
+}
+
+th, td {
+    text-align: left; /* Выравнивание текста в ячейках */
+    padding: 8px; /* Внутренние отступы в ячейках */
+}
+
+th {
+    background-color: #4CAF50; /* Зеленый фон для заголовков */
+    color: white; /* Белый текст */
+}
+
+/* Стили для ссылок в таблице */
+table a {
+    color: #4CAF50; /* Зеленый цвет текста */
+    text-decoration: none; /* Убрать подчеркивание */
+}
+
+table a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
