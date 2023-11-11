@@ -1,16 +1,14 @@
 <?php
 session_start();
-include 'db_connect.php'; // Подключение к вашей базе данных
+include 'db_connect.php';
 
-// Проверка, авторизован ли пользователь
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Перенаправление на страницу входа
+    header('Location: login.php');
     exit();
 }
 
 $userId = $_SESSION['user_id'];
 
-// Получение данных корзины из базы данных
 $query = "SELECT p.id, p.name, p.price, c.quantity FROM products p INNER JOIN cart c ON p.id = c.product_id WHERE c.user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $userId);
@@ -18,23 +16,23 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
+
+
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина | CopyStar</title>
-    <link rel="stylesheet" href="../../assets/css/cart.css"> <!-- Путь к вашему CSS -->
+    <link rel="stylesheet" href="../../assets/css/cart.css">
 </head>
 
 <body>
     <header>
-        <!-- Ваша шапка сайта -->
     </header>
-
     <main>
-    <a href="../../index.php" class="back-button">Назад</a>
-
+        <a href="../../index.php" class="back-button">Назад</a>
         <h1>Ваша корзина</h1>
         <table>
             <tr>
@@ -82,8 +80,8 @@ $result = $stmt->get_result();
     </main>
 
     <footer>
-        <!-- Ваш футер сайта -->
     </footer>
+
 </body>
 
 </html>

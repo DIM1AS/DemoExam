@@ -1,5 +1,4 @@
 <?php
-// manage_products.php
 session_start();
 
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
@@ -7,36 +6,46 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     exit;
 }
 
-// Подключение к базе данных
-include '../../assets/pages/db_connect.php'; // Исправленный путь
+include '../../assets/pages/db_connect.php';
 
-// Обработка отправки формы
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $imagePath = '';
 
-    // Подготовка и выполнение запроса к базе данных
-    $stmt = $conn->prepare("INSERT INTO products (name, description, price) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssd", $name, $description, $price);
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = '../../assets/img/index/catalog/product_1';
+        $fileName = time() . "_" . basename($_FILES['image']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+            $imagePath = 'assets/img/index/catalog/product_1' . $fileName;
+        } else {
+            echo "<p>Произошла ошибка при загрузке файла.</p>";
+        }
+    }
+
+    $stmt = $conn->prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssds", $name, $description, $price, $imagePath);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        echo "<p>Товар добавлен успешно.</p>";
+        echo "";
     } else {
-        echo "<p>Ошибка при добавлении товара.</p>";
+        echo "";
     }
+
 
     $stmt->close();
 }
 
-// Получение списка товаров
+
+
 $query = "SELECT * FROM products";
 $result = $conn->query($query);
 
-// Далее идет ваш HTML-код...
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -45,49 +54,158 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление товарами | CopyStar</title>
-    <link rel="stylesheet" href="../../assets/css/manage_products.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <h1>Управление товарами</h1>
-    <a href="admin.php" class="back-to-admin">&larr; Назад в админ-панель</a>
-
-    <!-- Форма для добавления нового товара -->
-    <h2>Добавить новый товар</h2>
-    <form action="manage_products.php" method="post">
-        <input type="text" name="name" placeholder="Название товара" required>
-        <input type="text" name="description" placeholder="Описание товара" required>
-        <input type="number" name="price" placeholder="Цена" required>
-        <input type="submit" name="add_product" value="Добавить товар">
-    </form>
-
-    <!-- Список существующих товаров с возможностью редактирования и удаления -->
-    <h2>Существующие товары</h2>
-    <table>
-        <tr>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Цена</th>
-            <th>Действия</th>
-        </tr>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td>
-                    <?php echo htmlspecialchars($row['name']); ?>
-                </td>
-                <td>
-                    <?php echo htmlspecialchars($row['description']); ?>
-                </td>
-                <td>
-                    <?php echo htmlspecialchars($row['price']); ?>
-                </td>
-                <td>
-                    <a href="../../assets/pages/edit_product.php?id=<?php echo $row['id']; ?>">Редактировать</a>
-                    <a href="../../assets/pages/delete_product.php?id=<?php echo $row['id']; ?>">Удалить</a>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </table>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Управление товарами</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link" href="admin.php">&larr; Назад в админ-панель</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Существующие товары</h2>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addProductModal">
+                Добавить товар
+            </button>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td>
+                            <?php echo htmlspecialchars($row['name']); ?>
+                        </td>
+                        <td>
+                            <?php echo htmlspecialchars($row['description']); ?>
+                        </td>
+                        <td>
+                            <?php echo htmlspecialchars($row['price']); ?>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm btn-edit" data-id="<?php echo $row['id']; ?>"
+                                data-name="<?php echo htmlspecialchars($row['name']); ?>"
+                                data-description="<?php echo htmlspecialchars($row['description']); ?>"
+                                data-price="<?php echo htmlspecialchars($row['price']); ?>"
+                                data-image="<?php echo htmlspecialchars($row['image']); ?>">Редактировать</button>
+                            <a href="../../assets/pages/delete_product.php?id=<?php echo $row['id']; ?>"
+                                class="btn btn-danger btn-sm">Удалить</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-4">
+        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">Добавить новый товар</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addProductForm" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="productName">Название товара</label>
+                                <input type="text" class="form-control" id="productName" name="name"
+                                    placeholder="Введите название" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDescription">Описание товара</label>
+                                <textarea class="form-control" id="productDescription" name="description"
+                                    placeholder="Введите описание" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="productPrice">Цена</label>
+                                <input type="number" class="form-control" id="productPrice" name="price"
+                                    placeholder="Укажите цену" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productImage">Изображение товара</label>
+                                <input type="file" class="form-control-file" id="productImage" name="image">
+                            </div>
+                            <button type="submit" name="add_product" class="btn btn-primary">Добавить товар</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">Редактировать товар</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="editProductId" name="id">
+                        <div class="form-group">
+                            <label for="editProductName">Название товара</label>
+                            <input type="text" class="form-control" id="editProductName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductDescription">Описание товара</label>
+                            <textarea class="form-control" id="editProductDescription" name="description"
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductPrice">Цена</label>
+                            <input type="number" class="form-control" id="editProductPrice" name="price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductImage">Изображение товара</label>
+                            <input type="file" class="form-control-file" id="editProductImage" name="image">
+                            <img id="editProductCurrentImage" src="" alt="Текущее изображение"
+                                style="max-width: 200px; max-height: 200px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-edit').on('click', function () {
+                var productId = $(this).data('id');
+                var productName = $(this).data('name');
+                var productDescription = $(this).data('description');
+                var productPrice = $(this).data('price');
+                var productImage = $(this).data('image');
+                $('#editProductId').val(productId);
+                $('#editProductName').val(productName);
+                $('#editProductDescription').val(productDescription);
+                $('#editProductPrice').val(productPrice);
+                $('#editProductCurrentImage').attr('src', productImage);
+                $('#editProductModal').modal('show');
+            });
+        });
+    </script>
 </body>
 
 </html>

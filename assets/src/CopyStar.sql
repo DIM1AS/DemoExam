@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 02 2023 г., 20:45
+-- Время создания: Ноя 11 2023 г., 18:55
 -- Версия сервера: 10.8.4-MariaDB
 -- Версия PHP: 7.2.34
 
@@ -34,6 +34,14 @@ CREATE TABLE `cart` (
   `quantity` int(11) NOT NULL,
   `date_added` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `date_added`) VALUES
+(6, 1, 18, 1, '2023-11-07 17:09:46'),
+(7, 1, 17, 1, '2023-11-11 08:17:39');
 
 -- --------------------------------------------------------
 
@@ -78,7 +86,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`) VALUES
-(17, 'PrintMax Pro 2023', 'Высокоскоростной офисный принтер с поддержкой Wi-Fi и NFC', '1200.00', 'assets/img/index/catalog/product/1.jpg'),
+(17, 'PrintMax Pro 2025', 'Высокоскоростной офисный принтер с поддержкой Wi-Fi и NFC', '1200.00', '../../assets/img/index/catalog/product_11699690678_1.jpg'),
 (18, 'ColorJet 5X', 'Многофункциональный цветной принтер для дома и офиса', '850.50', 'assets/img/index/catalog/product/1.jpg'),
 (19, 'EcoPrint LTX', 'Экономичный принтер с системой непрерывной подачи чернил', '699.99', 'assets/img/index/catalog/product/1.jpg'),
 (20, 'LaserPro 4D', 'Профессиональный лазерный принтер для бизнес-потребностей', '1300.00', 'assets/img/index/catalog/product/4.jpg'),
@@ -92,7 +100,8 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`) VALUES
 (28, 'PrintPro All-in-One', 'Универсальное решение для печати, сканирования и копирования', '800.00', 'assets/img/index/catalog/product/12.jpg'),
 (29, 'StudioJet Art', 'Принтер для печати на холстах и тяжелых бумагах', '1500.00', 'assets/img/index/catalog/product/13.jpg'),
 (30, 'MobileMini M1', 'Портативный принтер для печати с мобильных устройств', '220.00', 'assets/img/index/catalog/product/14.jpg'),
-(31, 'UltraPrint UHD', 'Принтер ультравысокого разрешения для дизайнерских нужд', '1800.00', 'assets/img/index/catalog/product/15.jpg');
+(31, 'UltraPrint UHD', 'Принтер ультравысокого разрешения для дизайнерских нужд', '1800.00', 'assets/img/index/catalog/product/15.jpg'),
+(60, 'ыва', 'ываыаыа', '3000.00', '');
 
 -- --------------------------------------------------------
 
@@ -116,7 +125,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `patronymic`, `login`, `email`, `password`, `is_admin`) VALUES
-(1, 'Дмитрий', 'Костяшев', 'Олегович', 'DIM1AS', 'dima.kostiasev@mail.ru', '$2y$10$Mj.5Zfkhz6pjiFoGkaZJEuc4gOv/W6LRVY5HneA2JUtH42JBdiNe6', 1);
+(1, 'Дмитрий', 'Костяшев', 'Олегович', 'DIM1AS', 'dima.kostiasev@mail.ru', '$2y$10$Mj.5Zfkhz6pjiFoGkaZJEuc4gOv/W6LRVY5HneA2JUtH42JBdiNe6', 1),
+(6, 'ХУЙ СОЛИ', 'ХУЙ СОЛИ', 'Олегович', 'SSSS', 'x@mail.ru', '$2y$10$vwhzevH2Aej0HRcZ.VCAZ.8NfWSw95MhNF.4IBRmWmawq3HAVSjIO', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -156,7 +166,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -168,13 +178,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

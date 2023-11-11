@@ -39,7 +39,6 @@ $result = $conn->query($query);
             <a href="#about-us">О нас</a>
             <a href="#catalog-section">Каталог</a>
             <a href="#contact-section">Где нас найти</a>
-
             <?php if ($userLoggedIn): ?>
                 <span>Привет,
                     <?php echo htmlspecialchars($_SESSION['name']); ?>
@@ -47,11 +46,10 @@ $result = $conn->query($query);
                 <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
                     <a href="./assets/pages/admin.php"><i class="fas fa-cog"></i></a>
                 <?php else: ?>
-                    <a href="profile.php"><i class="fas fa-user"></i></a>
+                    <a href="./assets/pages/my_profile.php"><i class="fas fa-user"></i></a>
                 <?php endif; ?>
                 <a href="./assets/pages/cart.php"><i class="fas fa-shopping-cart"></i></a>
                 <a href="./assets/pages/logout.php"><i class="fas fa-sign-out-alt"></i></a>
-
             <?php else: ?>
                 <button class="auth-btn"><a href="./assets/pages/login.php">Войти</a></button>
                 <button class="auth-btn"><a href="./assets/pages/register.php">Регистрация</a></button>
