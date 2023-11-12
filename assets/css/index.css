@@ -233,6 +233,7 @@ nav.menu a:hover,
 }
 
 .contact-map {
+    display: flex;
     flex: 1;
     height: 300px;
     width: 520px;
