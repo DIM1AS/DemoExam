@@ -3,9 +3,9 @@ header('Content-Type: text/html; charset=utf-8');
 session_start();
 
 $host = '127.0.0.1';
-$db = 'u2320790_copystar';
-$user = 'u2320790_dim1as';
-$pass = 'u2320790_dim1as';
+$db = 'copystar';
+$user = 'root';
+$pass = '';
 $port = "3306";
 
 $mysqli = new mysqli($host, $user, $pass, $db, $port);

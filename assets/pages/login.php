@@ -42,34 +42,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация | CopyStar</title>
-    <link rel="stylesheet" href="../../assets/css/login.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/css/login.css">
 </head>
 
 <body>
-    <div class="login-container">
-        <div class="logo-section">
-            <a href="../../index.php">
-                <img src="/assets/img/index/header/1.svg" alt="Логотип Copy Star">
-            </a>
-            <h1>| CopyStar</h1>
-        </div>
-        <form class="login-form" action="" method="POST">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh;">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <a href="../../index.php">
+                                <img class="mb-4" src="/assets/img/index/header/1.svg" alt="Логотип Copy Star"
+                                    width="72" height="72">
+                            </a>
+                            <h1 class="h3 mb-3 font-weight-normal"> Авторизация</h1>
+                        </div>
+                        <form class="form-signin" action="" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" required autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Пароль:</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+                        </form>
+                        <?php if (isset($_SESSION['login_error'])): ?>
+                            <div class="alert alert-danger mt-2" role="alert">
+                                <?php echo $_SESSION['login_error']; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="auth-btn">Войти</button>
-        </form>
-
-        <div id="message-section">
-            <?php echo isset($_SESSION['login_error']) ? $_SESSION['login_error'] : ''; ?>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

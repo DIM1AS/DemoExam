@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,70 +37,117 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация | CopyStar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../assets/css/register.css">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <div class="login-container">
-        <div class="logo-section">
-            <a href="../../index.php">
-                <img src="/assets/img/index/header/1.svg" alt="Логотип Copy Star">
-            </a>
-            <h1>| Регистрация</h1>
-        </div>
-        <form class="login-form" action="" method="POST" id="registration-form">
-            <div class="form-group">
-                <label for="name">Имя:</label>
-                <input type="text" id="name" name="name" required pattern="[А-Яа-яЁё\s\-]+">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh;">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center mb-5">
+
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form-signup" action="" method="POST" id="registration-form">
+                            <div class="form-group">
+                                <div class="text-center mb-4">
+                                    <a href="../../index.php">
+                                        <img class="mb-4" src="/assets/img/index/header/1.svg" alt="Логотип Copy Star"
+                                            width="72" height="72">
+                                    </a>
+                                    <h1 class="h3 mb-3 font-weight-normal"> Регистрация</h1>
+                                </div>
+                                <form class="form-signup" action="" method="POST" id="registration-form">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="name">Имя:</label>
+                                            <input type="text" id="name" name="name" class="form-control" required
+                                                pattern="[А-Яа-яЁё\s\-]+">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="surname">Фамилия:</label>
+                                            <input type="text" id="surname" name="surname" class="form-control" required
+                                                pattern="[А-Яа-яЁё\s\-]+">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="patronymic">Отчество:</label>
+                                            <input type="text" id="patronymic" name="patronymic" class="form-control"
+                                                pattern="[А-Яа-яЁё\s\-]+">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="login">Логин:</label>
+                                            <input type="text" id="login" name="login" class="form-control" required
+                                                pattern="[a-zA-Z0-9\-]+">
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Пароль:</label>
+                                <input type="password" id="password" name="password" class="form-control" required
+                                    minlength="6">
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="rules" data-toggle="modal"
+                                    data-target="#termsModal">
+                                <label class="form-check-label" for="rules">Я согласен с пользовательским
+                                    соглашением</label>
+                            </div>
+                            <div class="modal fade" id="termsModal" tabindex="-1" role="dialog"
+                                aria-labelledby="termsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="termsModalLabel">
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Закрыть">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h2>Пользовательское соглашение:</h2>
+                                            <p>1. Для совершения покупок необходимо зарегистрировать аккаунт в магазине.
+                                            </p>
+                                            <p>2. При регистрации предоставьте достоверную информацию о себе.</p>
+                                            <p>3. Нельзя использовать данные других лиц.</p>
+                                            <p>4. Интернет-магазин <b>НЕ</b> несет ответственность за финансовые
+                                                гарантии. </p>
+                                            <p>5. Интернет-магазин <b>НЕ</b> несет ответственность за предоставление
+                                                товаров.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        </form>
+                        <?php if ($message): ?>
+                            <div class="alert alert-info mt-3">
+                                <?php echo $message; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="surname">Фамилия:</label>
-                <input type="text" id="surname" name="surname" required pattern="[А-Яа-яЁё\s\-]+">
-            </div>
-            <div class="form-group">
-                <label for="patronymic">Отчество:</label>
-                <input type="text" id="patronymic" name="patronymic" pattern="[А-Яа-яЁё\s\-]+">
-            </div>
-            <div class="form-group">
-                <label for="login">Логин:</label>
-                <input type="text" id="login" name="login" required pattern="[a-zA-Z0-9\-]+">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" required minlength="6">
-            </div>
-            <div class="form-group">
-                <input class="ruik" type="checkbox" id="rules" name="rules" required>
-                <label for="rules">Я согласен с пользовательским соглашением</label>
-            </div>
-            <script src="../../assets/js/register.js"></script>
-            <div class="form-actions">
-                <button type="submit" class="auth-btn">Зарегистрироваться</button>
-            </div>
-        </form>
-        <div id="message-section">
-            <?php echo $message; ?>
         </div>
     </div>
-
-    <div id="rulesModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Пользовательское соглашение:</h2>
-            <p>1. Для совершения покупок необходимо зарегистрировать аккаунт в магазине.</p>
-            <p>2. При регистрации предоставьте достоверную информацию о себе.</p>
-            <p>3. Нельзя использовать данные других лиц.</p>
-            <p>4. Интернет-магазин <b>НЕ</b> несет ответственность за финансовые гарантии. </p>
-            <p>5. Интернет-магазин <b>НЕ</b> несет ответственность за предоставление товаров.</p>
-        </div>
-    </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../../assets/js/register.js"></script>
+
 </body>
 
 </html>
