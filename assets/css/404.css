@@ -1,0 +1,17 @@
+.error-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.error-code {
+    font-size: 150px;
+    font-weight: bold;
+}
+
+.error-message {
+    font-size: 22px;
+}
+
+.home-link {
+    margin-top: 20px;
+}

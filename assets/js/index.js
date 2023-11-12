@@ -12,16 +12,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    prevButton.addEventListener('click', function() {
+    prevButton.addEventListener('click', function () {
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         showSlide(currentSlide);
     });
 
-    nextButton.addEventListener('click', function() {
+    nextButton.addEventListener('click', function () {
         currentSlide = (currentSlide + 1) % totalSlides;
         showSlide(currentSlide);
     });
 
-    // Запускаем слайдер
     showSlide(currentSlide);
 });

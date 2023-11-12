@@ -1,3 +1,7 @@
+.logo {
+    width: 60px;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -137,6 +141,7 @@ nav.menu a:hover,
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .catalog-title {
@@ -297,6 +302,8 @@ nav.menu a i {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .product img {
@@ -357,57 +364,58 @@ nav.menu a i {
     border-radius: 4px;
 }
 
-/* Стили для кнопок */
-button, .btn {
-    background-color: #4CAF50; /* Зеленый фон */
-    color: white; /* Белый текст */
-    padding: 10px 20px; /* Внутренние отступы */
-    border: none; /* Убрать границу */
-    border-radius: 5px; /* Скругленные углы */
-    cursor: pointer; /* Курсор в виде указателя */
-    transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+button,
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-button:hover, .btn:hover {
-    background-color: #45a049; /* Темно-зеленый фон при наведении */
+button:hover,
+.btn:hover {
+    background-color: #45a049;
 }
 
-/* Стили для элемента выбора количества */
 input[type="number"] {
-    width: 50px; /* Ширина поля */
-    padding: 5px; /* Внутренние отступы */
-    margin: 5px 0; /* Внешние отступы сверху и снизу */
-    border: 1px solid #ddd; /* Граница */
-    border-radius: 4px; /* Скругленные углы */
-    text-align: center; /* Выравнивание текста по центру */
+    width: 50px;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
 }
 
-/* Улучшение внешнего вида для таблицы корзины */
 table {
-    width: 100%; /* Ширина таблицы */
-    border-collapse: collapse; /* Убрать двойные границы */
+    width: 100%;
+    border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid #ddd; /* Граница для таблицы и ячеек */
+table,
+th,
+td {
+    border: 1px solid #ddd;
 }
 
-th, td {
-    text-align: left; /* Выравнивание текста в ячейках */
-    padding: 8px; /* Внутренние отступы в ячейках */
+th,
+td {
+    text-align: left;
+    padding: 8px;
 }
 
 th {
-    background-color: #4CAF50; /* Зеленый фон для заголовков */
-    color: white; /* Белый текст */
+    background-color: #4CAF50;
+    color: white;
 }
 
-/* Стили для ссылок в таблице */
 table a {
-    color: #4CAF50; /* Зеленый цвет текста */
-    text-decoration: none; /* Убрать подчеркивание */
+    color: #4CAF50;
+    text-decoration: none;
 }
 
 table a:hover {
-    text-decoration: underline; /* Подчеркивание при наведении */
+    text-decoration: underline;
 }

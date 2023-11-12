@@ -8,7 +8,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
 
 include '../../assets/pages/db_connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
@@ -26,26 +26,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
         }
     }
 
-    $stmt = $conn->prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssds", $name, $description, $price, $imagePath);
-    $stmt->execute();
+    if (isset($_POST['add_product'])) {
+        $stmt = $conn->prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssds", $name, $description, $price, $imagePath);
+        $stmt->execute();
 
-    if ($stmt->affected_rows > 0) {
-        echo "";
-    } else {
-        echo "";
+        if ($stmt->affected_rows > 0) {
+            echo "";
+        } else {
+            echo "";
+        }
+
+        $stmt->close();
+    } elseif (isset($_POST['edit_product'])) {
+        $id = $_POST['id'];
+        $stmt = $conn->prepare("UPDATE products SET name = ?, description = ?, price = ?" . ($imagePath ? ", image = ?" : "") . " WHERE id = ?");
+        $imagePath ? $stmt->bind_param("ssdsi", $name, $description, $price, $imagePath, $id) : $stmt->bind_param("ssdi", $name, $description, $price, $id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            echo "";
+        } else {
+            echo "";
+        }
+
+        $stmt->close();
     }
-
-
-    $stmt->close();
 }
-
-
 
 $query = "SELECT * FROM products";
 $result = $conn->query($query);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -177,10 +190,8 @@ $result = $conn->query($query);
                         <div class="form-group">
                             <label for="editProductImage">Изображение товара</label>
                             <input type="file" class="form-control-file" id="editProductImage" name="image">
-                            <img id="editProductCurrentImage" src="" alt="Текущее изображение"
-                                style="max-width: 200px; max-height: 200px;">
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <button type="submit" name="edit_product" class="btn btn-primary">Сохранить изменения</button>
                     </form>
                 </div>
             </div>

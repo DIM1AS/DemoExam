@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 11 2023 г., 18:55
+-- Время создания: Ноя 12 2023 г., 16:09
 -- Версия сервера: 10.8.4-MariaDB
 -- Версия PHP: 7.2.34
 
@@ -35,14 +35,6 @@ CREATE TABLE `cart` (
   `date_added` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Дамп данных таблицы `cart`
---
-
-INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `date_added`) VALUES
-(6, 1, 18, 1, '2023-11-07 17:09:46'),
-(7, 1, 17, 1, '2023-11-11 08:17:39');
-
 -- --------------------------------------------------------
 
 --
@@ -63,9 +55,16 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `order_date`) VALUES
-(1, 1, 18, 6, NULL, '2023-11-02 17:40:20'),
-(2, 1, 30, 500, NULL, '2023-11-02 17:40:20'),
-(3, 1, 27, 5000, NULL, '2023-11-02 17:40:20');
+(4, 1, 1, 1, NULL, '2023-11-12 11:24:07'),
+(5, 1, 18, 1, NULL, '2023-11-12 11:24:07'),
+(6, 1, 18, 1, NULL, '2023-11-12 11:26:54'),
+(7, 1, 20, 1000, NULL, '2023-11-12 11:26:54'),
+(8, 7, 19, 1, NULL, '2023-11-12 11:27:38'),
+(9, 7, 18, 1, NULL, '2023-11-12 11:27:38'),
+(10, 1, 18, 1, NULL, '2023-11-12 11:29:15'),
+(11, 1, 22, 4, NULL, '2023-11-12 11:29:15'),
+(12, 1, 24, 100, NULL, '2023-11-12 11:29:15'),
+(13, 1, 17, 1, NULL, '2023-11-12 11:31:32');
 
 -- --------------------------------------------------------
 
@@ -100,8 +99,8 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`) VALUES
 (28, 'PrintPro All-in-One', 'Универсальное решение для печати, сканирования и копирования', '800.00', 'assets/img/index/catalog/product/12.jpg'),
 (29, 'StudioJet Art', 'Принтер для печати на холстах и тяжелых бумагах', '1500.00', 'assets/img/index/catalog/product/13.jpg'),
 (30, 'MobileMini M1', 'Портативный принтер для печати с мобильных устройств', '220.00', 'assets/img/index/catalog/product/14.jpg'),
-(31, 'UltraPrint UHD', 'Принтер ультравысокого разрешения для дизайнерских нужд', '1800.00', 'assets/img/index/catalog/product/15.jpg'),
-(60, 'ыва', 'ываыаыа', '3000.00', '');
+(31, 'UltraPrint UHD+', 'Принтер ультравысокого разрешения для дизайнерских нужд', '1800.00', 'assets/img/index/catalog/product_11699773591_product_11699690678_1.jpg'),
+(72, 'Член в соль', 'хурма', '5000.00', '');
 
 -- --------------------------------------------------------
 
@@ -125,8 +124,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `patronymic`, `login`, `email`, `password`, `is_admin`) VALUES
-(1, 'Дмитрий', 'Костяшев', 'Олегович', 'DIM1AS', 'dima.kostiasev@mail.ru', '$2y$10$Mj.5Zfkhz6pjiFoGkaZJEuc4gOv/W6LRVY5HneA2JUtH42JBdiNe6', 1),
-(6, 'ХУЙ СОЛИ', 'ХУЙ СОЛИ', 'Олегович', 'SSSS', 'x@mail.ru', '$2y$10$vwhzevH2Aej0HRcZ.VCAZ.8NfWSw95MhNF.4IBRmWmawq3HAVSjIO', 0);
+(1, 'ХУЙ', 'Костяшев', 'Олегович', 'DIM1AS', 'dima.kostiasev@mail.ru', '$2y$10$Mj.5Zfkhz6pjiFoGkaZJEuc4gOv/W6LRVY5HneA2JUtH42JBdiNe6', 1),
+(7, 'ХУЙ СОЛИ', 'ХУЙ СОЛИ', 'Олегович', 'SSSS', 'x@mail.ru', '$2y$10$ltoqljeqiuA.MvDc1jZlgOc8ehXSdqqdQeLt9YI8nR2zetAIpY3ne', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -166,25 +165,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

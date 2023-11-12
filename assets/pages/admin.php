@@ -5,7 +5,31 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     header('Location: ../../assets/pages/login.php');
     exit;
 }
+include '../../assets/pages/db_connect.php';
+$result = $conn->query("SELECT COUNT(*) as total_users FROM users");
+$total_users = $result->fetch_object()->total_users;
+
+$result = $conn->query("SELECT COUNT(*) as total_products FROM products");
+$total_products = $result->fetch_object()->total_products;
+
+$result = $conn->query("SELECT SUM(quantity) as cart_quantity FROM cart");
+$cart_quantity = $result->fetch_object()->cart_quantity;
+
+$recent_orders = $conn->query("
+    SELECT o.id, o.order_date, CONCAT(u.name, ' ', u.surname) AS user_name, 
+    SUM(p.price * o.quantity) AS total_price
+    FROM orders o
+    JOIN users u ON o.user_id = u.id
+    JOIN products p ON o.product_id = p.id
+    GROUP BY o.id
+    ORDER BY o.order_date DESC
+    LIMIT 500
+");
+
+
+$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -56,7 +80,9 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h5 class="card-title">Пользователей всего</h5>
-                        <p class="card-text">0</p>
+                        <p class="card-text">
+                            <?php echo $total_users; ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -64,15 +90,20 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 <div class="card text-white bg-success">
                     <div class="card-body">
                         <h5 class="card-title">Товаров в наличии</h5>
-                        <p class="card-text">0</p>
+                        <p class="card-text">
+                            <?php echo $total_products; ?>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card text-white bg-danger">
                     <div class="card-body">
-                        <h5 class="card-title">Заказов обрабатывается</h5>
-                        <p class="card-text">0</p>
+                        <h5 class="card-title">Товаров в корзинах</h5>
+                        <p class="card-text">
+                        <p class="card-text">
+                            <?php echo ($cart_quantity > 0) ? $cart_quantity : '0'; ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -91,14 +122,36 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                        $order_number = 1;
+                        while ($order = $recent_orders->fetch_assoc()):
+                            ?>
+                            <tr>
+                                <th scope="row">
+                                    <?php echo $order_number; ?>
+                                </th>
+                                <td>
+                                    <?php echo $order['order_date']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $order['user_name']; ?>
+                                </td>
+                                <td>
+                                    <?php echo number_format($order['total_price'], 2, '.', ' '); ?> ₽
+                                </td>
+                                <td>В обработке</td>
+                            </tr>
+                            <?php
+                            $order_number++;
+                        endwhile;
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
